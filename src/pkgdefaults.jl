@@ -121,9 +121,6 @@ for p in (:y, :z, :a, :f, :p, :n, :μ, :µ, :m, :c, :d,
     Core.eval(Unitful, :(const $(Symbol(p,:l)) = $(Symbol(p,:L))))
 end
 
-# Molarity
-@unit M      "M"        Molar       1mol/L                  true
-
 # Energy
 const q = 1.602_176_634e-19*C        # CODATA 2018; `e` means 2.718...
 @unit eV     "eV"       eV          q*V                     true
@@ -162,6 +159,11 @@ const R∞ = 10_973_731.568_160/m     # (21) Rydberg constant
 # Acceleration
 @unit ge     "ge"       EarthGravity gn                     false
 
+# "Amount of substance"-related
+@unit M      "M"        Molar       1mol/L                  true
+# 1/Na cannot be represented exactly as a Float64
+# Does not work with Rational either, as Na will not fit in an Int64
+@unit particle "particle" Particle  inv(Na)                false
 
 # CGS units
 @unit Gal    "Gal"      Gal         1cm/s^2                 true
